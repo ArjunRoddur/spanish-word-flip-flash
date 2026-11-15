@@ -28,7 +28,7 @@ pipeline {
                         }
                     }
                     steps {
-                        // Unit tests with Vitest
+                        sh 'npm ci --include=dev'
                         sh 'npx vitest run --reporter=verbose'
                     }
                 }
