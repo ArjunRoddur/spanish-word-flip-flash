@@ -18,6 +18,18 @@ pipeline {
                 sh 'npm run test:unit -- --reporter=verbose'
             }
         }
+        stage('integration test'){
+            agent {
+                docker {
+                    image 'mcr.microsoft.com/playwright:v1.54.2-jammy'
+                    resuseNode true
+
+                }
+            }
+            steps {
+                sh 'npx playwright test'
+                }
+        }
 
         stage('deploy') {
             agent {
