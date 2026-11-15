@@ -6,32 +6,16 @@ pipeline {
     }
 
     stages {
-        stage('build') {
+        stage('build and test') {
             agent {
                 docker {
                     image 'node:22-alpine'
                 }
             }
             steps {
-                sh 'npm ci'
+                sh 'npm ci --include=dev'
                 sh 'npm run build'
-            }
-        }
-
-        stage('test') {
-            parallel {
-                stage('unit tests') {
-                    agent {
-                        docker {
-                            image 'node:22-alpine'
-                            reuseNode true
-                        }
-                    }
-                    steps {
-                        sh 'npm ci --include=dev'
-                        sh 'npx vitest run --reporter=verbose'
-                    }
-                }
+                sh 'npm run test:unit -- --reporter=verbose'
             }
         }
 

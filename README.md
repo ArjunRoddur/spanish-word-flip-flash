@@ -78,12 +78,11 @@ npm run test:unit
 ```
 
 ## Jenkins (Docker) Pipeline
-A `Jenkinsfile` is included with three stages using a Dockerized Node agent.
+A `Jenkinsfile` is included with two stages using Dockerized agents.
 - Agent image: `node:22-alpine`
 - Stages:
-  1. build: `npm ci` + `npm run build`
-  2. test: executes unit tests (Vitest)
-  3. deploy: mocked, prints a success message
+  1. build and test: `npm ci --include=dev`, `npm run build`, and unit tests
+  2. deploy: mocked, prints a success message
 
 Environment variables for Jenkins:
 - `E2E_BASE_URL=http://localhost:8080`
